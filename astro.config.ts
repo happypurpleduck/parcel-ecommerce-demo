@@ -9,7 +9,9 @@ import Icons from "unplugin-icons/vite";
 // https://astro.build/config
 export default defineConfig({
 	output: "server",
-	adapter: astroBunAdapter({}),
+	adapter: astroBunAdapter({
+		port: 4321,
+	}),
 	server: {},
 	vite: {
 		plugins: [
