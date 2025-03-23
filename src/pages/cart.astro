@@ -1,0 +1,19 @@
+---
+import { CartPage } from "../components/cart/page";
+import TopBar from "../components/top-bar/top-bar.astro";
+import Layout from "../layouts/layout.astro";
+import { branch_atom } from "../store/shared/branch";
+
+const branch = branch_atom.get();
+if (!branch) {
+	return Astro.redirect("/");
+}
+---
+
+<Layout>
+	<TopBar />
+
+	<main class="container mx-auto mt-8">
+		<CartPage client:only="solid" />
+	</main>
+</Layout>

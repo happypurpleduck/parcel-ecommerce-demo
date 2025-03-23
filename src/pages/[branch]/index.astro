@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/layout.astro";
+import ItemCard from "../../components/item/card.astro";
+import { API, type TResponse } from "../../lib/api.ts";
+import type { TCategory } from "../../types/category.ts";
+import type { TCurrency } from "../../types/currency.ts";
+import TopBar from "../../components/top-bar/top-bar.astro";
+
+const categories = await API.get<
+	TResponse<{
+		currency: TCurrency;
+		categories: Array<TCategory>;
+	}>
+>(`ecommerce/${Astro.params.branch}/menu-category/all`).json();
+---
+
+<Layout>
+	<TopBar />
+
+	<main class="flex flex-col p-4">
+		<div class="flex flex-col gap-8">
+			{
+				categories.data.categories.map((category) => (
+					<div class="card">
+						<h2 class="card-title w-full border-b text-xl">
+							{category.name.en}
+						</h2>
+						<div class="bg-base-300 card-body grid auto-rows-auto grid-cols-1 gap-4 rounded-t-none sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+							{category.items.map((item) => (
+								<ItemCard item={item} currency={categories.data.currency} />
+							))}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</main>
+</Layout>

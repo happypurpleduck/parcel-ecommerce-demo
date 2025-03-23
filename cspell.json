@@ -1,0 +1,27 @@
+{
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+	"version": "0.2",
+	"words": [
+		"ecommerce",
+		"happypurpleduck",
+		"inox",
+		"nanostores",
+		"purpleduck",
+		"valibot"
+	],
+	"flagWords": [],
+	"language": "en,ar",
+	"import": [
+		"@cspell/dict-ar/cspell-ext.json"
+	],
+	"dictionaries": [
+		"custom-dictionary"
+	],
+	"dictionaryDefinitions": [
+		{
+			"name": "custom-dictionary",
+			"path": "./.cspell/custom-dictionary.txt",
+			"addWords": true
+		}
+	]
+}

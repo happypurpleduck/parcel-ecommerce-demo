@@ -1,14 +1,45 @@
 {
-  "name": "ecommerce-client",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "astro": "^5.5.2"
-  }
+	"name": "ecommerce-client",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev --host --allowed-hosts",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/solid-js": "^5.0.5",
+		"@astrojs/ts-plugin": "^1.10.4",
+		"@biomejs/biome": "^1.9.4",
+		"@iconify-json/tabler": "^1.2.17",
+		"@inox-tools/request-nanostores": "^0.2.3",
+		"@inox-tools/request-state": "^0.3.2",
+		"@nanostores/persistent": "^0.10.2",
+		"@nanostores/solid": "^0.5.0",
+		"@purpleduck/astro-bun-adapter": "github:happypurpleduck/astro-bun-adapter",
+		"@solid-primitives/storage": "^4.3.1",
+		"@tailwindcss/vite": "^4.0.14",
+		"@tanstack/solid-form": "^1.0.5",
+		"astro": "^5.5.2",
+		"daisyui": "^5.0.4",
+		"ky": "^1.7.5",
+		"nanostores": "^0.11.4",
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"solid-js": "^1.9.5",
+		"tailwindcss": "^4.0.14",
+		"unplugin-icons": "^22.1.0",
+		"valibot": "^1.0.0-rc.4"
+	},
+	"devDependencies": {
+		"@cspell/dict-ar": "^1.1.4",
+		"@types/bun": "^1.2.4",
+		"@typescript-eslint/parser": "^8.26.1",
+		"cspell": "^8.17.5",
+		"eslint": "^9.22.0",
+		"eslint-plugin-astro": "^1.3.1",
+		"eslint-plugin-jsx-a11y": "^6.10.2",
+		"prettier": "^3.5.3",
+		"prettier-plugin-astro": "^0.14.1"
+	}
 }

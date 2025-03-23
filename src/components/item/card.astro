@@ -1,0 +1,121 @@
+---
+import { get_currency_formatter } from "../../lib/formatter";
+import { branch_atom } from "../../store/shared/branch.ts";
+import type { TItem } from "../../types/item.ts";
+import type { TCurrency } from "../../types/currency.ts";
+import { ItemModalForm } from "./modal-form.tsx";
+
+interface Props {
+	item: TItem;
+	currency: TCurrency;
+}
+
+const props = Astro.props;
+
+const branch = branch_atom.get();
+if (!branch) {
+	// TODO: better actual handling
+	return Astro.redirect("/");
+}
+
+const currencyFormatter = get_currency_formatter(props.currency);
+---
+
+<article
+	role="button"
+	class="card bg-base-200 cursor-pointer shadow-sm"
+	onclick={`document.getElementById("item_modal_${props.item.id}").showModal()`}
+>
+	<figure
+		class="carousel carousel-vertical *:carousel-item aspect-[3/2] w-full *:h-auto *:w-full"
+	>
+		{
+			props.item.image.map((image) => (
+				<img src={image} alt={props.item.name.en} />
+			))
+		}
+		{
+			props.item.image.length === 0 ? (
+				<img src="http://placehold.co/300x200" alt={props.item.name.en} />
+			) : null
+		}
+	</figure>
+
+	<div class="card-body flex-row items-start justify-between gap-3 p-4">
+		<h2 class="card-title grow text-start text-xl">{props.item.name.en}</h2>
+		{
+			props.item.offerPrice === null ? (
+				<div>
+					<div class="font-semibold">
+						{currencyFormatter.format(props.item.price)}
+					</div>
+				</div>
+			) : (
+				<div class="text-end">
+					<div class="text-xs line-through">
+						{currencyFormatter.format(props.item.price)}
+					</div>
+					<div class="font-semibold">
+						{currencyFormatter.format(props.item.offerPrice)}
+					</div>
+				</div>
+			)
+		}
+	</div>
+
+	{
+		import.meta.env.DEV ? (
+			<div class="bg-gray-300 text-center text-xs">{props.item.id}</div>
+		) : null
+	}
+</article>
+
+<dialog id={`item_modal_${props.item.id.toString()}`} class="modal">
+	<ItemModalForm client:load {...props} branch_id={branch.id}>
+		<figure class="carousel *:carousel-item shrink-0 *:w-full">
+			{
+				props.item.image.map((image) => (
+					<img src={image} alt={props.item.name.en} />
+				))
+			}
+			{
+				props.item.image.length === 0 ? (
+					<img src="http://placehold.co/300x200" alt={props.item.name.en} />
+				) : null
+			}
+		</figure>
+		<div class="card">
+			<div class="card-body">
+				<div class="flex flex-row justify-between gap-4">
+					<h2 class="card-title">{props.item.name.en}</h2>
+					<div class="flex items-center">
+						{
+							props.item.offerPrice === null ? (
+								<div>
+									<div class="font-semibold">
+										{currencyFormatter.format(props.item.price)}
+									</div>
+								</div>
+							) : (
+								<div class="text-end">
+									<div class="text-xs line-through">
+										{currencyFormatter.format(props.item.price)}
+									</div>
+									<div class="font-semibold">
+										{currencyFormatter.format(props.item.offerPrice)}
+									</div>
+								</div>
+							)
+						}
+					</div>
+				</div>
+
+				<p>{props.item.description.en}</p>
+			</div>
+		</div>
+	</ItemModalForm>
+
+	<form method="dialog" class="modal-backdrop">
+		<button type="submit">close</button>
+	</form>
+</dialog>

@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+* {
+	scrollbar-color: var(--color-base-content) var(--color-base-100);
+}
+
+@property --scrollbar {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+html {
+	container-type: inline-size;
+	scrollbar-gutter: stable;
+}
+
+body {
+	--scrollbar: calc(100vw - 100cqw);
+}

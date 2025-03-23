@@ -1,11 +1,19 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { TopBarSelector } from "../components/top-bar/selector";
+import Layout from "../layouts/layout.astro";
+import { branches_atom } from "../store/shared/branches";
+import { branch_id_atom } from "../store/shared/selected-branch";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+branches_atom.get();
+const branch_id = branch_id_atom.get();
+if (branch_id) {
+	const url = Astro.url;
+	console.log({ url });
+	url.pathname = `/${branch_id}`;
+	return Astro.redirect(url.toString());
+}
 ---
 
 <Layout>
-	<Welcome />
+	<TopBarSelector dialog_only force_open client:load />
 </Layout>
